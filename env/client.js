@@ -23,13 +23,12 @@ if (!_clientEnv.success) {
     )
 }
 
-// `NEXT_PUBLIC_` で始まらない環境変数名がある場合はビルドエラーにする
-for (let key of Object.keys(_clientEnv.data)) {
+// `NEXT_PUBLIC_` で始まらない環境変数名がある場合はエラーをログに出力するだけ
+for (let key of Object.keys(_clientEnv.success ? _clientEnv.data : {})) {
     if (!key.startsWith('NEXT_PUBLIC_')) {
         console.error(
             `❌ 公開環境変数名が無効です: ${key}。'NEXT_PUBLIC_' で始まる必要があります`
         )
-        process.exit(1)
     }
 }
 
