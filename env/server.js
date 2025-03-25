@@ -16,12 +16,11 @@ if (!_serverEnv.success) {
     // ブラウザ環境ではクライアント環境変数のみを返す
     if (typeof window !== 'undefined') {
         module.exports.serverEnv = { ...clientEnv };
-        return;
+    } else {
+        // サーバーサイドでは終了
+        process.exit(1);
     }
-
-    // サーバーサイドでは終了
-    process.exit(1);
+} else {
+    // クライアント側用に定義した値も使用できるようマージしてエクスポート
+    module.exports.serverEnv = { ..._serverEnv.data, ...clientEnv };
 }
-
-// クライアント側用に定義した値も使用できるようマージしてエクスポート
-module.exports.serverEnv = { ..._serverEnv.data, ...clientEnv }
