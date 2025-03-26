@@ -35,11 +35,11 @@ export async function askDifyBuildingManagementQuestion( // マンション管�
 
     // リクエストボディの構築
     const requestBody: any = {
-      query: question,
+      query: question, // 質問をトップレベルに移動
+      inputs: {}, // 空のinputsオブジェクト
       response_mode: "blocking",
       conversation_id: "",
       user: "UkGOolorCje0Jt7sV2RA8ayILJ52",
-      inputs: {},
       query_parameters: {
         temperature: 0.7,
         top_p: 0.95,
@@ -80,7 +80,7 @@ export async function askDifyBuildingManagementQuestion( // マンション管�
       switch (response.status) {
         case 400:
           if (errorData.code === 'invalid_param') {
-            errorMessage = `無効なパラメータが指定されました: ${errorData.details || ''}`;
+            errorMessage = `無効なパラメータが指定されました: ${errorData.message || ''}`;
           } else if (errorData.code === 'app_unavailable') {
             errorMessage = 'アプリケーションの設定が利用できません。';
           } else if (errorData.code === 'provider_not_initialize') {
