@@ -35,9 +35,8 @@ export async function askDifyBuildingManagementQuestion( // マンション管�
 
     // リクエストボディの構築
     const requestBody: any = {
-      inputs: {
-        question: question // 質問をinputsオブジェクトの中に移動
-      },
+      query: question, // 質問をトップレベルに移動
+      inputs: {}, // 空のinputsオブジェクト
       response_mode: "blocking",
       conversation_id: "",
       user: "UkGOolorCje0Jt7sV2RA8ayILJ52",
