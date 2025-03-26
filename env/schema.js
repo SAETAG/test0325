@@ -7,8 +7,7 @@ const { z } = require('zod')
 const serverSchema = z.object({
     NODE_ENV: z.enum(['development', 'test', 'production']),
     SECRET_TOKEN: z.string().regex(/[a-zA-Z0-9]{32}/), // 32文字英数字
-    DIFY_API_KEY: z.string().min(1),
-    NEXT_PUBLIC_DIFY_API_URL: z.string().url(),
+    DIFY_API_ENDPOINT: z.string().url(),
 })
 
 /**
@@ -17,7 +16,6 @@ const serverSchema = z.object({
  */
 const clientSchema = z.object({
     NEXT_PUBLIC_SITE_URL: z.string().url(),
-    NEXT_PUBLIC_DIFY_API_URL: z.string().url(),
     NEXT_PUBLIC_FIREBASE_API_KEY: z.string().min(1),
     NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: z.string().min(1),
     NEXT_PUBLIC_FIREBASE_PROJECT_ID: z.string().min(1),
@@ -32,7 +30,6 @@ const clientSchema = z.object({
  */
 const clientEnv = {
     NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
-    NEXT_PUBLIC_DIFY_API_URL: process.env.NEXT_PUBLIC_DIFY_API_URL,
     NEXT_PUBLIC_FIREBASE_API_KEY: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
     NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
     NEXT_PUBLIC_FIREBASE_PROJECT_ID: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,

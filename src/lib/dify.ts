@@ -7,7 +7,7 @@ const { serverEnv } = require("../../env/server");
 
 // 環境変数からAPIキーとエンドポイントを取得
 const apiKey = serverEnv.DIFY_API_KEY; // 検証済み環境変数からDify APIキーを取得
-const apiEndpoint = serverEnv.NEXT_PUBLIC_DIFY_API_URL; // 検証済み環境変数からDify APIエンドポイントのURLを取得
+const apiEndpoint = serverEnv.DIFY_API_ENDPOINT; // 検証済み環境変数からDify APIエンドポイントのURLを取得
 
 /**
  * Difyのチャットコンプリーションエンドポイントにリクエストを送信

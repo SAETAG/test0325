@@ -26,7 +26,7 @@ if (!_serverEnv.success) {
             // 必須の環境変数が設定されていない場合はデフォルト値を設定
             NODE_ENV: process.env.NODE_ENV || 'development',
             DIFY_API_KEY: process.env.DIFY_API_KEY || '',
-            NEXT_PUBLIC_DIFY_API_URL: process.env.NEXT_PUBLIC_DIFY_API_URL || 'https://api.dify.ai/v1'
+            DIFY_API_ENDPOINT: process.env.DIFY_API_ENDPOINT || 'https://api.dify.ai/v1'
         };
         module.exports.serverEnv = availableEnv;
     } else {
