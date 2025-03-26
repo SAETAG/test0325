@@ -36,12 +36,11 @@ export async function askDifyBuildingManagementQuestion( // マンション管�
     // リクエストボディの構築
     // DifyのAPIリクエスト構造に合わせて適宜調整
     const requestBody: any = {
-      // APIリクエストの本体を定義
-      query: question, // ユーザーの質問をクエリとして設定
-      response_mode: "blocking", // 同期モードで応答を待つ設定
+      query: question,
+      response_mode: "streaming", // ストリーミングモードに変更
       conversation_id: "", // 新しい会話として扱う場合は空文字
-      user: "end-user", // エンドユーザーとして識別
-      inputs: {}, // 追加の入力パラメータを格納するオブジェクト
+      user: "UkGOolorCje0Jt7sV2RA8ayILJ52", // 実際のユーザーIDを使用
+      inputs: {},
     };
 
     // 文書コンテキストがある場合は inputs に追加
@@ -70,11 +69,34 @@ export async function askDifyBuildingManagementQuestion( // マンション管�
 
     // レスポンスの処理
     if (!response.ok) {
-      // レスポンスステータスが正常でない場合のエラーハンドリング
-      const errorData = await response.json(); // エラーレスポンスのJSONを解析
-      throw new Error( // エラーメッセージを生成してスロー
-        `Dify API エラー: ${errorData.message || response.statusText}`
-      );
+      const errorData = await response.json();
+      let errorMessage = `Dify API エラー: ${errorData.message || response.statusText}`;
+      
+      // エラーコードに基づく詳細なメッセージ
+      switch (response.status) {
+        case 400:
+          if (errorData.code === 'invalid_param') {
+            errorMessage = '無効なパラメータが指定されました。';
+          } else if (errorData.code === 'app_unavailable') {
+            errorMessage = 'アプリケーションの設定が利用できません。';
+          } else if (errorData.code === 'provider_not_initialize') {
+            errorMessage = 'AIモデルの設定が完了していません。';
+          } else if (errorData.code === 'provider_quota_exceeded') {
+            errorMessage = 'APIの利用制限に達しました。';
+          }
+          break;
+        case 401:
+          errorMessage = '認証に失敗しました。APIキーを確認してください。';
+          break;
+        case 404:
+          errorMessage = 'リソースが見つかりません。';
+          break;
+        case 500:
+          errorMessage = 'サーバーエラーが発生しました。';
+          break;
+      }
+      
+      throw new Error(errorMessage);
     }
 
     const data = await response.json(); // 正常なレスポンスのJSONを解析

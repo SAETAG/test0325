@@ -6,7 +6,7 @@ import { Metadata } from 'next'
 
 // exportしないことで静的生成時にメタデータが評価されなくなります
 const metadata: Metadata = {
-  title: 'ログイン - シメくん',
+  title: 'ログイン - シメスくん',
   description: 'マンション書類管理システムへのログイン',
 }
 

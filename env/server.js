@@ -13,11 +13,13 @@ if (!_serverEnv.success) {
         JSON.stringify(_serverEnv.error.format(), null, 4)
     );
 
-    // ブラウザ環境ではクライアント環境変数のみを返す
-    if (typeof window !== 'undefined') {
-        module.exports.serverEnv = { ...clientEnv };
+    // 開発環境では警告のみ表示
+    if (process.env.NODE_ENV === 'development') {
+        console.warn('⚠️ 開発環境では環境変数の検証をスキップします');
+        module.exports.serverEnv = { ...process.env, ...clientEnv };
     } else {
-        // サーバーサイドでは終了
+        // 本番環境ではエラーで終了
+        console.error('❌ 本番環境では環境変数の検証に失敗したため、アプリケーションを終了します');
         process.exit(1);
     }
 } else {
