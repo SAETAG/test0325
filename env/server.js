@@ -18,9 +18,15 @@ if (!_serverEnv.success) {
         console.warn('⚠️ 開発環境では環境変数の検証をスキップします');
         module.exports.serverEnv = { ...process.env, ...clientEnv };
     } else {
-        // 本番環境ではエラーで終了
+        // 本番環境ではエラーで終了（サーバーサイドのみ）
         console.error('❌ 本番環境では環境変数の検証に失敗したため、アプリケーションを終了します');
-        process.exit(1);
+        if (typeof window === 'undefined') {
+            process.exit(1);
+        } else {
+            // ブラウザ環境ではエラーメッセージのみ表示
+            console.error('⚠️ ブラウザ環境では環境変数の検証に失敗しました');
+            module.exports.serverEnv = { ...process.env, ...clientEnv };
+        }
     }
 } else {
     // クライアント側用に定義した値も使用できるようマージしてエクスポート
