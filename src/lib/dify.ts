@@ -3,7 +3,7 @@
 // この関数は、Difyサービスを使用して質問に回答を生成します。
 
 // 検証済み環境変数をインポート
-const { serverEnv, clientEnv } = require("../../env/server");
+const { clientEnv } = require("../../env/client");
 
 // 環境変数からAPIキーとエンドポイントを取得
 const apiKey = clientEnv.NEXT_PUBLIC_DIFY_API_KEY; // クライアントサイドの環境変数からDify APIキーを取得
