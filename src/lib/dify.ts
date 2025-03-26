@@ -34,25 +34,30 @@ export async function askDifyBuildingManagementQuestion( // マンション管�
     const endpoint = `${apiEndpoint}/chat-messages`; // チャットメッセージ用のエンドポイントURLを構築
 
     // リクエストボディの構築
-    // DifyのAPIリクエスト構造に合わせて適宜調整
     const requestBody: any = {
       query: question,
-      response_mode: "streaming", // ストリーミングモードに変更
+      response_mode: "blocking", // streamingからblockingに変更
       conversation_id: "", // 新しい会話として扱う場合は空文字
-      user: "UkGOolorCje0Jt7sV2RA8ayILJ52", // 実際のユーザーIDを使用
+      user: "UkGOolorCje0Jt7sV2RA8ayILJ52",
       inputs: {},
+      query_parameters: {
+        temperature: 0.7,
+        top_p: 0.95,
+        max_tokens: 1000
+      }
     };
 
     // 文書コンテキストがある場合は inputs に追加
     if (documentContext) {
-      // 文書コンテキストが提供されている場合の条件分岐
-      requestBody.inputs.context = documentContext; // コンテキスト情報をリクエストに追加
+      requestBody.inputs.context = documentContext;
     }
 
     // チャット履歴がある場合は追加
     if (chatHistory && chatHistory.length > 0) {
-      // チャット履歴が存在し、空でない場合の条件分岐
-      requestBody.conversation_id = "existing-conversation-id"; // 既存の会話IDを設定（実際には動的に生成する必要がある）
+      requestBody.messages = chatHistory.map(msg => ({
+        role: msg.role,
+        content: msg.content
+      }));
     }
 
     // APIへのリクエスト送信
@@ -70,13 +75,14 @@ export async function askDifyBuildingManagementQuestion( // マンション管�
     // レスポンスの処理
     if (!response.ok) {
       const errorData = await response.json();
+      console.error('Dify API エラーレスポンス:', errorData); // エラーレスポンスの詳細をログ出力
       let errorMessage = `Dify API エラー: ${errorData.message || response.statusText}`;
       
       // エラーコードに基づく詳細なメッセージ
       switch (response.status) {
         case 400:
           if (errorData.code === 'invalid_param') {
-            errorMessage = '無効なパラメータが指定されました。';
+            errorMessage = `無効なパラメータが指定されました: ${errorData.details || ''}`;
           } else if (errorData.code === 'app_unavailable') {
             errorMessage = 'アプリケーションの設定が利用できません。';
           } else if (errorData.code === 'provider_not_initialize') {
