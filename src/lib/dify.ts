@@ -38,7 +38,7 @@ export async function askDifyBuildingManagementQuestion( // マンション管�
       query: question, // 質問をトップレベルに追加
       inputs: {
         question: question, // 質問をinputsオブジェクトの中にも保持
-        documentContext: documentContext || "" // documentContextを必須パラメータとして追加
+        documentContext: documentContext ? [documentContext] : [] // documentContextを配列形式に変更
       },
       response_mode: "blocking",
       conversation_id: "",
