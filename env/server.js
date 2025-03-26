@@ -6,6 +6,14 @@ const { serverSchema } = require("./schema")
 // ブラウザ環境かどうかを判定
 const isBrowser = typeof window !== 'undefined';
 
+// デバッグ情報を出力
+console.log('🔍 環境変数のデバッグ情報:');
+console.log('NODE_ENV:', process.env.NODE_ENV);
+console.log('SECRET_TOKEN:', process.env.SECRET_TOKEN ? '設定済み' : '未設定');
+console.log('DIFY_API_ENDPOINT:', process.env.DIFY_API_ENDPOINT);
+console.log('DIFY_API_KEY:', process.env.DIFY_API_KEY ? '設定済み' : '未設定');
+console.log('利用可能な環境変数:', Object.keys(process.env));
+
 // サーバー側で使う環境変数を検証
 const _serverEnv = serverSchema.safeParse(process.env);
 
