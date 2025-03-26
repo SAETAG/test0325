@@ -37,7 +37,8 @@ export async function askDifyBuildingManagementQuestion( // マンション管�
     const requestBody: any = {
       query: question, // 質問をトップレベルに追加
       inputs: {
-        question: question // 質問をinputsオブジェクトの中にも保持
+        question: question, // 質問をinputsオブジェクトの中にも保持
+        documentContext: documentContext || "" // documentContextを必須パラメータとして追加
       },
       response_mode: "blocking",
       conversation_id: "",
@@ -48,11 +49,6 @@ export async function askDifyBuildingManagementQuestion( // マンション管�
         max_tokens: 1000
       }
     };
-
-    // 文書コンテキストがある場合は inputs に追加
-    if (documentContext) {
-      requestBody.inputs.context = documentContext;
-    }
 
     // チャット履歴がある場合は追加
     if (chatHistory && chatHistory.length > 0) {
