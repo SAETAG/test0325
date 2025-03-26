@@ -36,8 +36,8 @@ export async function askDifyBuildingManagementQuestion( // マンション管�
     // リクエストボディの構築
     const requestBody: any = {
       query: question,
-      response_mode: "blocking", // streamingからblockingに変更
-      conversation_id: "", // 新しい会話として扱う場合は空文字
+      response_mode: "blocking",
+      conversation_id: "",
       user: "UkGOolorCje0Jt7sV2RA8ayILJ52",
       inputs: {},
       query_parameters: {
@@ -62,14 +62,12 @@ export async function askDifyBuildingManagementQuestion( // マンション管�
 
     // APIへのリクエスト送信
     const response = await fetch(endpoint, {
-      // fetch APIを使用してDify APIにリクエストを送信
-      method: "POST", // HTTPメソッドはPOST
+      method: "POST",
       headers: {
-        // HTTPヘッダーの設定
-        "Content-Type": "application/json", // JSONコンテンツタイプを指定
-        Authorization: `Bearer ${apiKey}`, // APIキーをBearerトークンとして認証ヘッダーに追加
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
       },
-      body: JSON.stringify(requestBody), // リクエストボディをJSON文字列に変換
+      body: JSON.stringify(requestBody),
     });
 
     // レスポンスの処理
