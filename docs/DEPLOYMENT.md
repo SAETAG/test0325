@@ -62,7 +62,7 @@ NEXT_PUBLIC_FIREBASE_APP_ID=1:xxxxxxxxxxxx:web:xxxxxxxxxxxx
 
 # Dify API関連の環境変数
 DIFY_API_KEY=your-dify-api-key
-DIFY_API_ENDPOINT=https://api.dify.ai/v1 # または自己ホスティングのエンドポイント
+NEXT_PUBLIC_DIFY_API_URL=https://api.dify.ai/v1 # または自己ホスティングのエンドポイント
 ```
 
 ### 2. Vercel でのデプロイ
