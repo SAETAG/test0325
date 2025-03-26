@@ -8,6 +8,7 @@ const serverSchema = z.object({
     NODE_ENV: z.enum(['development', 'test', 'production']),
     SECRET_TOKEN: z.string().regex(/[a-zA-Z0-9]{32}/), // 32文字英数字
     DIFY_API_ENDPOINT: z.string().url(),
+    DIFY_API_KEY: z.string().min(1), // Dify APIキーを追加
 })
 
 /**
